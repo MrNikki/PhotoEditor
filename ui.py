@@ -78,11 +78,11 @@ class Ui_MainWindow(object):
         self.btn_right.setText(_translate("MainWindow", "Вправо"))
         self.btn_dir.setText(_translate("MainWindow", "Папка"))
         self.image.setText(_translate("MainWindow", "TextLabel"))
-        self.btn_2.setText(_translate("MainWindow", "PushButton"))
-        self.btn_4.setText(_translate("MainWindow", "PushButton"))
-        self.btn_3.setText(_translate("MainWindow", "PushButton"))
-        self.btn_1.setText(_translate("MainWindow", "PushButton"))
-        self.btn_5.setText(_translate("MainWindow", "PushButton"))
+        self.btn_2.setText(_translate("MainWindow", "Рельєф"))
+        self.btn_4.setText(_translate("MainWindow", "Яскравість +"))
+        self.btn_3.setText(_translate("MainWindow", "Яскравість -"))
+        self.btn_1.setText(_translate("MainWindow", "Сопій"))
+        self.btn_5.setText(_translate("MainWindow", "Зберегти"))
 
 
 if __name__ == "__main__":
