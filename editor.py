@@ -4,7 +4,7 @@ from PIL import Image, ImageFilter
 import os
 
 
-
+#Клас
 class ImageEditor(QtWidgets.QMainWindow):
     def __init__ (self):
         super().__init__()
@@ -25,10 +25,12 @@ class ImageEditor(QtWidgets.QMainWindow):
         self.ui.btn_5.clicked.connect(self.save_choosen_image)
 
         
-
+#Функція вибору шляху
     def choose_dir(self):
         self.workdir = QtWidgets.QFileDialog.getExistingDirectory()
     
+
+#Фільтруємо файли в місці, яке вказали як шлях і відбираємо виключно зображення
     def filter(self, files, extentions):
         result = []
         for file in files:
@@ -37,6 +39,8 @@ class ImageEditor(QtWidgets.QMainWindow):
                     result.append(file)
         return result
     
+
+#У віджеті, який призначений за відображення списку картинок відображаємо всі картинки, які присутні по вказано шляху
     def show_files(self):
         extentions = [".jpg", ".png", ".jpeg", ".bmp"]
         self.choose_dir()
@@ -47,16 +51,20 @@ class ImageEditor(QtWidgets.QMainWindow):
             for file in files:
                 self.ui.list_files.addItems(files)
 
-
         except:
             win = QtWidgets.QMessageBox()
             win.setText("Кудиииииииииииииии?????")
             win.exec()
+
+
+#Підвантажує наше зображення після вибору його в віджеті
     def loadimage(self, name):
         self.filename = name
         self.path = os.path.join(self.workdir, self.filename)
         self.image = Image.open(self.path)
 
+
+#Відображає вибране зображення в віджеті QLabel
     def showimage(self):
         if self.ui.list_files.selectedItems():
             name = self.ui.list_files.selectedItems()[0].text()
@@ -67,6 +75,8 @@ class ImageEditor(QtWidgets.QMainWindow):
             pix = pix.scaled(w,h, QtCore.Qt.KeepAspectRatio)
             self.ui.image.setPixmap(pix)
 
+
+#Відображає змінене зображення в віджеті QLabel
     def show_changed(self):
         self.loadimage("changed.jpg")
         pix = QtGui.QPixmap(self.path)
@@ -74,66 +84,143 @@ class ImageEditor(QtWidgets.QMainWindow):
         pix = pix.scaled(w,h, QtCore.Qt.KeepAspectRatio)
         self.ui.image.setPixmap(pix)
 
+
+#
     def do_bw(self):
-        self.image = self.image.convert("L")
-        self.saveimage()
-        self.show_changed()
+        try:
+            self.image = self.image.convert("L")
+            self.saveimage()
+            self.show_changed()
+        except:
+            win = QtWidgets.QMessageBox()
+            win.setText("Спочатку оберіть фото для редагування!!!")
+            win.exec()
 
+
+#
     def do_left(self):
-        self.image = self.image.rotate(270)
-        self.saveimage()
-        self.show_changed()
+        try:
+            self.image = self.image.rotate(270)
+            self.saveimage()
+            self.show_changed()
+        except:
+            win = QtWidgets.QMessageBox()
+            win.setText("Спочатку оберіть фото для редагування!!!")
+            win.exec()
 
 
+#
     def do_right(self):
-        self.image = self.image.rotate(90)
-        self.saveimage()
-        self.show_changed()
+        try:
+            self.image = self.image.rotate(90)
+            self.saveimage()
+            self.show_changed()
+        except:
+            win = QtWidgets.QMessageBox()
+            win.setText("Спочатку оберіть фото для редагування!!!")
+            win.exec()
 
+
+#
     def do_mirror(self):
-        self.image = self.image.transpose(Image.FLIP_LEFT_RIGHT)
-        self.saveimage()
-        self.show_changed()
+        try:
+            self.image = self.image.transpose(Image.FLIP_LEFT_RIGHT)
+            self.saveimage()
+            self.show_changed()
+        except:
+            win = QtWidgets.QMessageBox()
+            win.setText("Спочатку оберіть фото для редагування!!!")
+            win.exec()
 
+
+#
     def do_sharp(self):
-        self.image = self.image.filter(ImageFilter.SHARPEN)
-        self.saveimage()
-        self.show_changed()
+        try:
+            self.image = self.image.filter(ImageFilter.SHARPEN)
+            self.saveimage()
+            self.show_changed()
+        except:
+            win = QtWidgets.QMessageBox()
+            win.setText("Спочатку оберіть фото для редагування!!!")
+            win.exec()
 
+
+#
     def blurr(self):
-        self.image = self.image.filter(ImageFilter.GaussianBlur(10))
-        self.saveimage()
-        self.show_changed()
+        try:
+            self.image = self.image.filter(ImageFilter.GaussianBlur(10))
+            self.saveimage()
+            self.show_changed()
+        except:
+            win = QtWidgets.QMessageBox()
+            win.setText("Спочатку оберіть фото для редагування!!!")
+            win.exec()
 
+
+#
     def relief(self):
-        self.image = self.image.filter(ImageFilter.EMBOSS)
-        self.saveimage()
-        self.show_changed()
+        try:
+            self.image = self.image.filter(ImageFilter.EMBOSS)
+            self.saveimage()
+            self.show_changed()
+        except:
+            win = QtWidgets.QMessageBox()
+            win.setText("Спочатку оберіть фото для редагування!!!")
+            win.exec()
 
+
+#
     def add_light(self):
-        self.image = self.image.point(lambda x: x * 2)
-        self.saveimage()
-        self.show_changed()
-        
+        try:
+            self.image = self.image.point(lambda x: x * 2)
+            self.saveimage()
+            self.show_changed()
+        except:
+            win = QtWidgets.QMessageBox()
+            win.setText("Спочатку оберіть фото для редагування!!!")
+            win.exec()
+
+
+#
     def minus_light(self):
-        self.image = self.image.point(lambda x: x * 0.5)
-        self.saveimage()
-        self.show_changed()
+        try:
+            self.image = self.image.point(lambda x: x * 0.5)
+            self.saveimage()
+            self.show_changed()
+        except:
+            win = QtWidgets.QMessageBox()
+            win.setText("Спочатку оберіть фото для редагування!!!")
+            win.exec()
 
 
-
+#
     def saveimage(self):
         self.path = os.path.join(self.workdir, "changed.jpg")
         self.image = self.image.convert("RGB")
         self.image.save(self.path)
 
+        
+#
     def save_choosen_image(self):
-        path = QtWidgets.QFileDialog.getExistingDirectory()
-        path = os.path.join(path, "changed.jpg")
-        self.image.save(path)
-        win = QtWidgets.QMessageBox()
-        win.setText("Файл збережено!")
-        win.exec()
+        try:
+            path = QtWidgets.QFileDialog.getExistingDirectory()
+            if path!="":
+                path = os.path.join(path, "changed.jpg")
+                self.image.save(path)
+                win = QtWidgets.QMessageBox()
+                win.setText("Файл збережено!")
+                win.exec()
+            else:
+                win = QtWidgets.QMessageBox()
+                win.setText("Файл НЕ збережено!")
+                win.exec()
+            
+            
+        except:
+            win = QtWidgets.QMessageBox()
+            win.setText("Спочатку оберіть фото для редагування!!!")
+            win.exec()
+
 
 
 
@@ -141,7 +228,7 @@ class ImageEditor(QtWidgets.QMainWindow):
 
 
     
-
+#
 app = QtWidgets.QApplication([])
 win = ImageEditor()
 win.show()
