@@ -20,8 +20,10 @@ class ImageEditor(QtWidgets.QMainWindow):
         self.ui.btn_sharp.clicked.connect(self.do_sharp)
         self.ui.btn_4.clicked.connect(self.add_light)
         self.ui.btn_3.clicked.connect(self.minus_light)
-        self.ui.btn_1.clicked.connect(self.do_sopiy)
+        self.ui.btn_1.clicked.connect(self.blurr)
         self.ui.btn_2.clicked.connect(self.relief)
+        self.ui.btn_5.clicked.connect(self.save_choosen_image)
+
         
 
     def choose_dir(self):
@@ -36,7 +38,7 @@ class ImageEditor(QtWidgets.QMainWindow):
         return result
     
     def show_files(self):
-        extentions = [".jpg", ".png", ".jpeg", "gif", ".bmp"]
+        extentions = [".jpg", ".png", ".jpeg", ".bmp"]
         self.choose_dir()
         try:
             files = os.listdir(self.workdir)
@@ -98,13 +100,13 @@ class ImageEditor(QtWidgets.QMainWindow):
         self.saveimage()
         self.show_changed()
 
-    def do_sopiy(self):
-        self.image = self.image.point(lambda x: 0.299 * x + 0.587 * x + 0.114 * x)
+    def blurr(self):
+        self.image = self.image.filter(ImageFilter.GaussianBlur(10))
         self.saveimage()
         self.show_changed()
 
     def relief(self):
-        self.image = self.image.emboss()
+        self.image = self.image.filter(ImageFilter.EMBOSS)
         self.saveimage()
         self.show_changed()
 
@@ -124,6 +126,15 @@ class ImageEditor(QtWidgets.QMainWindow):
         self.path = os.path.join(self.workdir, "changed.jpg")
         self.image = self.image.convert("RGB")
         self.image.save(self.path)
+
+    def save_choosen_image(self):
+        path = QtWidgets.QFileDialog.getExistingDirectory()
+        path = os.path.join(path, "changed.jpg")
+        self.image.save(path)
+        win = QtWidgets.QMessageBox()
+        win.setText("Файл збережено!")
+        win.exec()
+
 
 
 
